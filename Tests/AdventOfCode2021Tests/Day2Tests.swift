@@ -6,7 +6,7 @@ final class Day2Tests: XCTestCase {
     func testDepthAndPosition() throws {
         var position = 0
         var depth = 0
-        let commands = try loadInputFile()
+        let commands = try Utility.readLines(from: "Day2.txt").map { Command(commandString: $0)! }
         commands.forEach {
             switch $0.direction {
             case .forward: position += $0.amount
@@ -15,13 +15,15 @@ final class Day2Tests: XCTestCase {
             }
         }
         print("position = \(position) depth = \(depth) product = \(position * depth)")
+        XCTAssertEqual(position, 1878)
+        XCTAssertEqual(depth, 777)
     }
     
     func testDepthAndPositionViaAim() throws {
         var position = 0
         var depth = 0
         var aim = 0
-        let commands = try loadInputFile()
+        let commands = try Utility.readLines(from: "Day2.txt").map { Command(commandString: $0)! }
         commands.forEach {
             switch $0.direction {
             case .forward:
@@ -32,13 +34,8 @@ final class Day2Tests: XCTestCase {
             }
         }
         print("position = \(position) depth = \(depth) product = \(position * depth)")
-    }
-    
-    private func loadInputFile() throws -> [Command] {
-        let url = URL(fileURLWithPath: #file).deletingLastPathComponent().appendingPathComponent("Day2.txt")
-        let contents = try String(contentsOf: url, encoding: .utf8)
-        let lines = contents.split { $0.isNewline }
-        return lines.map { Command(commandString: String($0))! }
+        XCTAssertEqual(position, 1878)
+        XCTAssertEqual(depth, 703160)
     }
     
     private struct Command {
